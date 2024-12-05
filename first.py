@@ -1,8 +1,15 @@
 import sqlite3
 import tkinter as tk
+from tkinter import messagebox
 # Import SQL for Database read and tkinter for GUI
+
 root = tk.Tk()
 root.title("Simple GUI Example")
+
+menubar = tk.Menu(root, background='black',foreground='black',activebackground='white', activeforeground='black')
+file = tk.Menu(menubar, tearoff=1,background='white', foreground='black')
+file.add_command(label="New")
+menubar.add_cascade(label="File", menu=file)
 
 frame = tk.Frame(root)
 frame.pack(side="left",pady=20)
@@ -28,6 +35,6 @@ rows = cursor.fetchall()
 
 for row in rows:
     listbox.insert(tk.END, row)
-    
+root.config(menu=menubar)
 root.mainloop()
 conn.close()
