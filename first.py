@@ -1,6 +1,6 @@
 import sqlite3
 import tkinter as tk
-
+# Import SQL for Database read and tkinter for GUI
 root = tk.Tk()
 root.title("Simple GUI Example")
 
