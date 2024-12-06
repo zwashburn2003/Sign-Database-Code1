@@ -1,13 +1,16 @@
-import sqlite3
-import tkinter as tk
-# Import SQL for Database read and tkinter for GUI
+import sqlite3  # Reading SQL and creating queries
+import tkinter as tk  # Create GUI in python
+from tkinter import filedialog  # Open File Explorer
 
+def open_file():
+    # Open a file dialog and return the selected file path
+    file_path = filedialog.askopenfilename(title="Open a file", filetypes=[("Database files", "*.db"), ("All files", "*.*")])
+    if file_path:
+        dbfile = file_path
+        root.title(file_path)
 
 def insert():
     pass
-
-root = tk.Tk()
-root.configure(background='black')
 
 def clearList():
     listbox.delete('0', 'end')
@@ -21,19 +24,30 @@ def songs(event):
         listbox.insert(tk.END, row)
 
 def retrieve():
-    inputValue=textBox.get("1.0", "end-1c")
-    sql1 = "INSERT INTO artists (Name) VALUES (%s)"
-    val1 = inputValue
-    cursor.execute(sql1, val1)
-    print(inputValue)
-textBox =tk.Text(root, height=2, width=10)
-textBox.pack()
-buttonCommit = tk.Button(root, height=1, width=10, text="Commit",command=lambda: retrieve())
-buttonCommit.pack()
+    user_input = entry.get()
+    sql1 = "INSERT INTO artists (Name) VALUES (?)"
+    val1 = user_input
+    cursor.execute(sql1, 'user_input')
+    print(user_input)
+    
+
+dbfile = 'C:/Users/zwash/Downloads/chinook.db'
+conn = sqlite3.connect(dbfile)
+cursor= conn.cursor()
+
+root = tk.Tk()
+root.state('zoomed')
+
+
+entry = tk.Entry(width=40)
+entry.pack()
+
+insertbutton = tk.Button(root, height=1, width=10, text="insert", command=lambda: retrieve())
+insertbutton.pack()
 root.title("Simple GUI Example")
 
-buttonClear = tk.Button(root, height=1, width=10, text="Clear",command=lambda: clearList())
-buttonClear.pack()
+#buttonClear = tk.Button(root, height=1, width=10, text="Clear",command=lambda: clearList())
+#buttonClear.pack()
 
 menubar = tk.Menu(root, background='black',foreground='black',activebackground='white', activeforeground='black')
 file = tk.Menu(menubar, tearoff=0,background='white', foreground='black')
@@ -41,7 +55,7 @@ file.add_command(label="New")
 menubar.add_cascade(label="File", menu=file)
 
 database = tk.Menu(menubar, tearoff=0,background='blue', foreground='black')
-database.add_command(label="Select")
+database.add_command(label="Open", command=open_file)
 menubar.add_cascade(label="Database", menu=database)
 
 frame = tk.Frame(root)
@@ -65,9 +79,7 @@ scrollbar = tk.Scrollbar(frame, orient=tk.VERTICAL, command=listbox.yview)
 scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 listbox.config(yscrollcommand=scrollbar.set)
 
-dbfile = 'C:/Users/zwash/Downloads/chinook.db'
-conn = sqlite3.connect(dbfile)
-cursor= conn.cursor()
+
 
 
 cursor.execute("SELECT * FROM artists")
