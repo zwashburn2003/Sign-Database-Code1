@@ -6,9 +6,10 @@ def open_file():
     # Open a file dialog and return the selected file path
     file_path = filedialog.askopenfilename(title="Open a file", filetypes=[("Database files", "*.db"), ("All files", "*.*")])
     if file_path:
+        
         dbfile = file_path
         root.title(file_path)
-
+    return dbfile
 def insert():
     pass
 
@@ -27,13 +28,11 @@ def retrieve():
     user_input = entry.get()
     sql1 = "INSERT INTO artists (Name) VALUES (?)"
     val1 = user_input
-    cursor.execute(sql1, 'user_input')
+    cursor.execute(sql1, val1)
     print(user_input)
     
 
-dbfile = 'C:/Users/zwash/Downloads/chinook.db'
-conn = sqlite3.connect(dbfile)
-cursor= conn.cursor()
+
 
 root = tk.Tk()
 root.state('zoomed')
@@ -79,10 +78,13 @@ scrollbar = tk.Scrollbar(frame, orient=tk.VERTICAL, command=listbox.yview)
 scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 listbox.config(yscrollcommand=scrollbar.set)
 
+open_file = 'C:/Users/zwash/Downloads/chinook.db'
+conn = sqlite3.connect(open_file)
+cursor= conn.cursor()
 
 
 
-cursor.execute("SELECT * FROM artists")
+cursor.execute("SELECT Name FROM artists ")
 
 rows = cursor.fetchall()
 
