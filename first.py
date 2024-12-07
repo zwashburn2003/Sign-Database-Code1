@@ -45,8 +45,8 @@ insertbutton = tk.Button(root, height=1, width=10, text="insert", command=lambda
 insertbutton.pack()
 root.title("Simple GUI Example")
 
-#buttonClear = tk.Button(root, height=1, width=10, text="Clear",command=lambda: clearList())
-#buttonClear.pack()
+buttonClear = tk.Button(root, height=1, width=10, text="Clear",command=lambda: clearList())
+buttonClear.pack()
 
 menubar = tk.Menu(root, background='black',foreground='black',activebackground='white', activeforeground='black')
 file = tk.Menu(menubar, tearoff=0,background='white', foreground='black')
