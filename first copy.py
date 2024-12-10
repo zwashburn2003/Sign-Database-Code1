@@ -83,15 +83,21 @@ scrollbar = tk.Scrollbar(frame, orient=tk.VERTICAL, command=roads.yview)
 scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 roads.config(yscrollcommand=scrollbar.set)
 
-frame = tk.Frame(root)
-frame.pack(side="left",pady=20)
+frame1 = tk.Frame(root)
+frame1.pack(side="left",pady=20)
 
-listbox = tk.Listbox(frame, width=50, height=100)
+listbox = tk.Listbox(frame1, width=50, height=100)
 listbox.pack(side=tk.LEFT, fill=tk.BOTH)
 
 scrollbar = tk.Scrollbar(frame, orient=tk.VERTICAL, command=listbox.yview)
 scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 listbox.config(yscrollcommand=scrollbar.set)
+
+frame2 = tk.Frame(root)
+frame2.pack(side='top', pady=20)
+
+entry1 = tk.Entry(frame2)
+entry1.pack()
 
 op.open_file = 'C:/Users/zwash/Downloads/chinook.db'
 conn = sqlite3.connect(op.open_file)
