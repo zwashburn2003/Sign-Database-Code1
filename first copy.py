@@ -16,9 +16,7 @@ class operations():
         return dbfile
 
     def clearList(self):
-        if roads:
             roads.delete('0', 'end')
-        if listbox:
             listbox.delete('0', 'end')
 
     def songs(self,event):
@@ -51,17 +49,7 @@ op = operations()
 
 root = tk.Tk()
 root.state('zoomed')
-
-tk.Label(root, text="Insert:")
-entry = tk.Entry(root)
-entry.pack()
-
-insertbutton = tk.Button(root, height=1, width=10, text="Insert", command=lambda: op.insert())
-insertbutton.pack()
 root.title("Simple GUI Example")
-
-buttonClear = tk.Button(root, height=1, width=10, text="Clear",command=lambda: op.clearList())
-buttonClear.pack()
 
 menubar = tk.Menu(root, background='black',foreground='black',activebackground='white', activeforeground='black')
 file = tk.Menu(menubar, tearoff=0,background='white', foreground='black')
@@ -89,12 +77,22 @@ frame1.pack(side="left",pady=20)
 listbox = tk.Listbox(frame1, width=50, height=100)
 listbox.pack(side=tk.LEFT, fill=tk.BOTH)
 
-scrollbar = tk.Scrollbar(frame, orient=tk.VERTICAL, command=listbox.yview)
+scrollbar = tk.Scrollbar(frame1, orient=tk.VERTICAL, command=listbox.yview)
 scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 listbox.config(yscrollcommand=scrollbar.set)
 
 frame2 = tk.Frame(root)
-frame2.pack(side='top', pady=20)
+frame2.pack(side='right', pady=20)
+
+tk.Label(frame2, text="Insert:")
+entry = tk.Entry(frame2)
+entry.pack()
+
+insertbutton = tk.Button(frame2, height=1, width=10, text="Insert", command=lambda: op.insert())
+insertbutton.pack()
+
+buttonClear = tk.Button(frame2, height=1, width=10, text="Clear",command=lambda: op.clearList())
+buttonClear.pack()
 
 entry1 = tk.Entry(frame2)
 entry1.pack()
@@ -113,5 +111,6 @@ op.initialPrint()
 
 
 root.config(menu=menubar)
+root.config(bg='white')
 root.mainloop()
 conn.close()
