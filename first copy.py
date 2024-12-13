@@ -3,7 +3,7 @@ import tkinter as tk  # Create GUI in python
 from tkinter import filedialog  # Open File Explorer
 from tkinter import messagebox  # Not sure yet
 from tkinter import ttk  # Import additional tkinter functions
-from Options import Options  # Connect to library file
+import Options as opt  # Connect to library file
 
 class operations():
     
@@ -124,7 +124,7 @@ entry1 = tk.Entry(frame2)
 entry1.pack()
 
 # Create dropdown menu using Options.py as values
-combo = ttk.Combobox(frame2, values=Options)
+combo = ttk.Combobox(frame2, values=opt.Options)
 combo.bind("<<ComboboxSelected>>", op.insert())
 combo.pack(pady=20)
 
