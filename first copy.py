@@ -2,6 +2,8 @@ import sqlite3  # Reading SQL and creating queries
 import tkinter as tk  # Create GUI in python
 from tkinter import filedialog  # Open File Explorer
 from tkinter import messagebox
+from tkinter import ttk
+from Options import Options
 
 class operations():
     
@@ -28,13 +30,14 @@ class operations():
             listbox.insert(tk.END, row)
 
     def insert(self):
+        selected = combo.get()
         user_input = entry.get()
         entry.delete('0', 'end')
-        cursor.execute("INSERT INTO artists (Name) VALUES (?)", (user_input,))
+        cursor.execute("INSERT INTO artists (Name) VALUES (?)", (selected,))
         conn.commit()
         self.clearList()
         self.initialPrint()
-        print(user_input)
+        print(selected)
 
     def initialPrint(self):
         cursor.execute("SELECT Name FROM artists ")
@@ -46,6 +49,9 @@ class operations():
         
 op = operations()
 
+op.open_file = 'C:/Users/zwash/Downloads/chinook.db'
+conn = sqlite3.connect(op.open_file)
+cursor = conn.cursor()
 
 root = tk.Tk()
 root.state('zoomed')
@@ -84,7 +90,6 @@ listbox.config(yscrollcommand=scrollbar.set)
 frame2 = tk.Frame(root)
 frame2.pack(side='right', pady=20)
 
-tk.Label(frame2, text="Insert:")
 entry = tk.Entry(frame2)
 entry.pack()
 
@@ -97,9 +102,11 @@ buttonClear.pack()
 entry1 = tk.Entry(frame2)
 entry1.pack()
 
-op.open_file = 'C:/Users/zwash/Downloads/chinook.db'
-conn = sqlite3.connect(op.open_file)
-cursor= conn.cursor()
+combo = ttk.Combobox(frame2, values=Options)
+combo.bind("<<ComboboxSelected>>", op.insert())
+combo.pack(pady=20)
+
+
 
 op.initialPrint()
 
